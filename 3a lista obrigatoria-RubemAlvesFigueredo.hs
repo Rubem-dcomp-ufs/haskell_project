@@ -4,20 +4,21 @@ Todos os exercícios dos slides "aula08 RecursoPrimitiva" e "aula10 RecursaoGera
 Adicionalmente, os exercícios do livro do 7.8 a 7.26, exceto os exercícios 7.11, 7.15, 7.21, 7.22 e 7.23.
 14 questoes do livro +  9 da aula8 + 16 da aula10 = 39
 --}
--- Exercicio 8.1
+-- EXERCÍCIOS DA AULA 8
+-- 8.1
 multDois::Float->Float->Float
 multDois a b
   | (a ==0) || (b == 0) = 0
   | otherwise = a + multDois a (b-1)
 -- =====================================
--- Exercicio 8.2
+-- 8.2
 -- Funcao que receba n e devola 2ˆn
 potDois::Int->Int
 potDois n
   | n == 0 = 1
   | otherwise = 2*potDois(n-1)
 -- =====================================
--- Exercicio 8.3
+-- 8.3
 -- Recebe m e n devolve mˆn
 potMN::Int->Int->Int
 potMN m n
@@ -26,7 +27,7 @@ potMN m n
   | m == 0 = 0
   | otherwise = m*potMN m (n-1)
 -- =====================================
--- Exercicio 8.4
+-- 8.4
 -- Escreva uma função que dado n, calcule: 0! + 1! + 2! + ... + n!
 somaFatorial::Int->Int
 somaFatorial n
@@ -34,14 +35,14 @@ somaFatorial n
   | n == 1 = 1
   | otherwise = n + 1 + somaFatorial (n-1)
 -- =====================================
--- Exercicio 8.5
+-- 8.5
 -- Escreva uma função que calcule 2ˆ0 + 2ˆ1 + 2ˆ2 + ... + 2ˆn
 somaPot::Int->Int
 somaPot n
   | n == 0 = 1
   | otherwise = potDois n + somaPot (n-1)
 -- =====================================
--- Exercicio 8.6
+-- 8.6
 {--
 f :: Int -> Int
 f m
@@ -173,6 +174,12 @@ or :: [Bool] -> Bool
 or [] = False
 or (x:xs) = x || or xs
 -- ================================================
+-- EXERCÍCIOS DA AULA 10
+-- 10.1
+
+-- 10.2
+
+
 -- Do Livro: 7.8
 elemNum :: Integer -> [Integer] -> Integer
 elemNum _ []     = 0
