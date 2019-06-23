@@ -1,3 +1,4 @@
+import Data.Char
 {--
 Todos os exercícios dos slides "aula08 RecursoPrimitiva" e "aula10 RecursaoGeral".
 Adicionalmente, os exercícios do livro do 7.8 a 7.26, exceto os exercícios 7.11, 7.15, 7.21, 7.22 e 7.23.
@@ -104,6 +105,66 @@ raizQI n
   where
     r = raizQI ( n-1 )
 -- =====================================
+-- 8.10
+{--
+Usando recursão primitiva sobre listas (não pode
+usar compreensões), defina funções para
+1– O produto dos elementos de uma lista de inteiros
+2– Filtrar (eliminar) os números pares, ou seja, ficar somente
+com os ímpares
+3– Verificar se um string é formado somente por caracteres
+alfanuméricos (letras e numerais). Use a função
+isAlphaNum :: Char -> Bool
+da biblioteca Data.Char
+4– Eliminar a primeira ocorrência de um dado elemento, se
+ele ocorrer, senão retornar a lista original
+5– Eliminar todas as ocorrências de um dado elemento
+6– Inverter um string
+--}
+-- 1-
+prodInt :: [Int] -> Int
+(x:xs) == [] = 0
+prodInt x:xs
+  | otherwise = x*prodInt(xs)
+-- =====
+-- 2-
+filtrarPares :: [Int]->[Int]
+filtrarPares x:xs
+  | (x:xs)==[] = []
+  | otherwise = acrescImpares x:xs
+          where acrescImpares x:xs = (x `mod` 2) /= 0 = x:filtrarPares xs
+-- =====
+-- 3-
+verAlfaNum :: String -> Bool
+
+verAlfaNum s:st
+  | st == [] = False
+  | isAlphaNum s == elem s s:st = True
+  | otherwise = verAlfaNum st
+  
+ -- =====
+ -- 4-
+eliminar :: Int ->[Int]->[Int]
+eliminar _ [] = []
+eliminar n (m:ms)
+    | n == m = eliminar n ms
+	| otherwise = (m:ms)
+-- =====
+-- 5-
+eliminarT :: Int -> [Int] -> [Int]
+eliminarT _ [] = []
+eliminar n (m:ms)
+  | n == m = elimnarT m ms
+  | otherwise = eliminar n ms
+-- =====
+-- 6-
+inverte :: String -> String
+inverte [] = []
+inverte x:xs = inverte xs ++ [x]
+-- ===============================================
+
+
+
 
   
   
