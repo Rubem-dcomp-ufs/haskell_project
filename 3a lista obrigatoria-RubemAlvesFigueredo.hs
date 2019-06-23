@@ -65,24 +65,18 @@ maiorF x
   | x == 2 = 2
   | otherwise =  --}
 -- ====================================
-{-- Exercicio 8.7
+{-- 8.7
 Dada um função f de Int em Int, defina por recursão primitiva
 uma função algumF0 que aceite um natural n e devolva o booleano
 True se e somente se um ou mais valores de f 0, f 1, ..., f n é zero.
 Teste com diferentes definições de f.
 --}
-f :: Int -> Int
-f n
-  | n == 0 = 0
-  | algumF0 n /= True = n
-  | otherwise = n
-
 algumF0 :: Int -> Bool
 algumF0 n
   | n == 0 = True
-  | n /= 0 = algumF0 n
-  | otherwise = False
+  | otherwise = AlgumF0 n-1
 -- ====================================
+-- 8.8
 {--
 Dada um função f de Int em Bool, defina por recursão primitiva
 uma função algumFentre que aceite um natural n e devolva o booleano
@@ -94,3 +88,24 @@ algumFentre ::Int -> Bool
 algumFentre i
   | i >= 0 && i<= n = True
   | otherwise = False
+
+-- =====================================
+-- 8.9
+{--
+Defina por recursão primitiva uma função que calcule a raiz
+quadrada inteira de n (o maior natural cujo quadrado é menor ou
+igual a n)
+--}
+raizQI :: Int -> Int
+raizQI 0 = 0
+raizQI n
+  | (r+1)^2 == n = r + 1
+  | otherwise = r
+  where
+    r = raizQI ( n-1 )
+-- =====================================
+
+  
+  
+  
+  
