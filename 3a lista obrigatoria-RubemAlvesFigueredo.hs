@@ -162,8 +162,42 @@ inverte :: String -> String
 inverte [] = []
 inverte x:xs = inverte xs ++ [x]
 -- ===============================================
+{-- 8.11
+A função or aplica o operador ou lógico || a todos os elementos
+de uma lista. Por exemplo:
+or [False, True, False]
+↝  False || True || False ↝  … ↝  True
+Dê uma definição recursiva para a função or.
+--}
+or :: [Bool] -> Bool
+or [] = False
+or (x:xs) = x || or xs
+-- ================================================
+-- Do Livro: 7.8
+elemNum :: Integer -> [Integer] -> Integer
+elemNum _ []     = 0
+elemNum a (x:xs)
+    | a == x    = 1 + elemNum a xs
+    | otherwise = elemNum a xs
 
+testElemNum = TestList
+    [ TestCase (assertEqual "" 0 (elemNum 5 []))
+    , TestCase (assertEqual "" 0 (elemNum 5 [1,2,3]))
+    ]
+-- ================================================
+-- do Livro: 7.9
+unique :: [Integer] -> [Integer]
+unique ls    = [x | x <- ls, elemNum x ls == 1]
 
+unique' :: [Integer] -> [Integer]
+unique' []          = []
+unique' (x : xs)
+    | elemNum x (x : xs) == 1    = x : unique' xs
+    | otherwise                  = unique' (deleteAll x xs)
+  where
+    deleteAll :: Integer -> [Integer] -> [Integer]
+    deleteAll target ls          = [_x | _x <- ls, _x /= target]
+-- ================================================
 
 
   
