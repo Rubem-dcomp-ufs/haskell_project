@@ -302,7 +302,33 @@ prop_mysplitAt n ls
     |(mysplitAt n ls) == (splitAt n ls) = True
     |otherwise = False
 -- ===============================================
-  
+
+--7.25
+my_sublist :: Eq a => [a] -> [a] -> Bool
+my_sublist [] [] = True
+my_sublist _ [] = False
+my_sublist [] _ = True
+my_sublist (x:xs) (y:ys)
+    |(x == y)  = my_sublist xs ys
+    |otherwise = my_sublist (x:xs) ys
+
+my_subsequence :: Eq a => [a]->[a]->Bool
+my_subsequence [] [] = True
+my_subsequence [] _  = True
+my_subsequence _ []  = False
+my_subsequence (x:xs) (y:ys)
+    |(x == y) = my_subsequence xs ys
+    |(x /= y) = my_subsequence (x:xs) ys
+    |otherwise = my_subsequence (y:ys) xs
+-- ================================================
+
+--7.26
+prop_sublist :: [Char] -> [Char] -> Bool
+prop_sublist x y = (my_sublist x y)
+
+prop_subsequence :: [Char] -> [Char] -> Bool
+prop_subsequence x y = (my_subsequence x y)
+-- ================================================
   
   
   
