@@ -124,8 +124,8 @@ ele ocorrer, senão retornar a lista original
 --}
 -- 1-
 prodInt :: [Int] -> Int
-(x:xs) == [] = 0
 prodInt x:xs
+  | (x:xs) == [] = 0
   | otherwise = x*prodInt(xs)
 -- =====
 -- 2-
@@ -137,7 +137,6 @@ filtrarPares x:xs
 -- =====
 -- 3-
 verAlfaNum :: String -> Bool
-
 verAlfaNum s:st
   | st == [] = False
   | isAlphaNum s == elem s s:st = True
@@ -176,9 +175,19 @@ or (x:xs) = x || or xs
 -- ================================================
 -- EXERCÍCIOS DA AULA 10
 -- 10.1
+{-- Definir propriedades da função maior e testar com
+quickCheck --}
 
 -- 10.2
+{-- Definir uma função menor para calcular o menor de uma
+lista de inteiros --}
+menor :: [Int] -> Int
+menor [x] = x
+menor (x:xs) = min x (menor xs)
 
+-- 10.3
+{-- Definir propriedades da função menor e testar com
+quickCheck --}
 
 -- Do Livro: 7.8
 elemNum :: Integer -> [Integer] -> Integer
