@@ -102,18 +102,18 @@ ele ocorrer, senão retornar a lista original
 -- 1-
 prodInt :: [Int] -> Int
 prodInt [] = 0
-prodInt x:xs = x*prodInt(xs)
+prodInt (x:xs) = x*prodInt(xs)
 -- =====
 -- 2-
 filtrarPares :: [Int]->[Int]
 filtrarPares [] = []
-filtrarPares x:xs = acrescImpares x:xs
+filtrarPares (x:xs) = acrescImpares x:xs
                     where acrescImpares x:xs = (x `mod` 2) /= 0 = x:filtrarPares xs
 -- =====
 -- 3-
 verAlfaNum :: String -> Bool
 verAlfaNum [] = False
-verAlfaNum s:st
+verAlfaNum (s:st)
   | isAlphaNum s == elem s s:st = True
   | otherwise = verAlfaNum st
   
@@ -135,7 +135,7 @@ eliminar n (m:ms)
 -- 6-
 inverte :: String -> String
 inverte [] = []
-inverte x:xs = inverte xs ++ [x]
+inverte (x:xs) = inverte xs ++ [x]
 -- ===============================================
 {-- 8.11
 A função or aplica o operador ou lógico || a todos os elementos
@@ -152,14 +152,19 @@ or (x:xs) = x || or xs
 -- 10.1
 {-- Definir propriedades da função maior e testar com
 quickCheck --}
-
+maior :: [Int] -> Bool
+maior [] = False
+maior (x:xs)
+  | max x (maior xs) == maximum (x:xs) = True
+  | otherwise = False
+-- ================================================
 -- 10.2
 {-- Definir uma função menor para calcular o menor de uma
 lista de inteiros --}
 menor :: [Int] -> Int
 menor [x] = x
 menor (x:xs) = min x (menor xs)
-
+-- =================================================
 -- 10.3
 {-- Definir propriedades da função menor e testar com
 quickCheck --}
@@ -190,7 +195,7 @@ unique ls = [x | x <- ls, elemNum x ls == 1]
 unique' :: [Integer] -> [Integer]
 unique' [] = []
 unique' (x : xs)
-    | elemNum x (x : xs) == 1 = x : unique' xs
+    | elemNum x (x:xs) == 1 = x : unique' xs
     | otherwise = unique' (deleteAll x xs)
   where
     deleteAll :: Integer -> [Integer] -> [Integer]
@@ -215,8 +220,6 @@ myMin (x:xs) = go x xs
         | m < y    = go m ys
         |otherwise =  go y ys
 
-
-
 iSort :: [Integer] -> [Integer]
 iSort [] = []
 iSort (x:xs) = ins x (iSort xs)
@@ -226,11 +229,11 @@ ins x [] = [x]
 ins x (y:ys)
    | x <= y = remove (x:(y:ys))
    |otherwise = y : ins x ys
-
+-- ============================================
 --7.14
 isSorted :: [Integer] -> Bool
 isSorted (x:xs) = head (iSort(x:xs)) == myMin (x:xs)
-
+-- ============================================
 --7.16
 remove :: [Integer] -> [Integer]
 remove [x] = [x]
@@ -238,14 +241,14 @@ remove [ ] = [ ]
 remove (x:xs)
     | (elenNum x xs < 1) = x : remove xs -- Uso de elenNum. Não ter elementos repetidos
     | otherwise  = remove (xs)
-
+-- ===========================================
 --7.17
 qSort :: [Int] -> [Int]
 
 qSort [] = []
 qSort (x:xs)
     = qSort [ y | y<-xs, y > x ] ++ [x] ++ qSort [ y | y<-xs, y < x ]
-
+-- ==========================================
 --7.18
 sublist :: Eq a => [a] -> [a] -> Bool
 
@@ -269,7 +272,7 @@ subs (x:xs) (y:ys)
     where
     (x1:x1s) = xs
     (y1:y1s) = ys
-
+-- ============================================
 --7.20
 mytake :: Int -> [a] -> [a]
 mytake 0 _  = []
@@ -298,7 +301,7 @@ prop_mysplitAt ::  Int -> [Int] -> Bool
 prop_mysplitAt n ls
     |(mysplitAt n ls) == (splitAt n ls) = True
     |otherwise = False
-
+-- ===============================================
   
   
   
