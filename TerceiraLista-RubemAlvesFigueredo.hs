@@ -42,30 +42,7 @@ somaPot n
   | n == 0 = 1
   | otherwise = potDois n + somaPot (n-1)
 -- =====================================
--- 8.6
-{--
-f :: Int -> Int
-f m
-  | m == 0 = 8
-  | m == 1 = 44
-  | m == 2 = 17
-  | otherwise = 0
- --}
- {--
- f :: Int -> Int
- f m
-   | m == 0 = 8
-   | m == 1 = 44
-   | m == 2 = 17
-   | m > maiorF m = m
-   | otherwise = 0
-
-maiorF :: Int -> Int
-maiorF x
-  | x == 0 = 0
-  | x == 1 = 1
-  | x == 2 = 2
-  | otherwise =  --}
+-- 8.6 - Não entendi o que, exatamente, se pede.
 -- ====================================
 {-- 8.7
 Dada um função f de Int em Int, defina por recursão primitiva
@@ -186,8 +163,14 @@ menor (x:xs) = min x (menor xs)
 -- 10.3
 {-- Definir propriedades da função menor e testar com
 quickCheck --}
+prop_menor :: [Int] -> Bool
+prop_menor [] = False
+prop_menor (x:xs) 
+  | min x (menor xs) == minimum (x:xs) = True
+  | otherwise = False
 
--- Do Livro: 7.8
+-- **************Do Livro*****************
+--7.8
 elemNum :: Integer -> [Integer] -> Integer
 elemNum _ []     = 0
 elemNum a (x:xs)
@@ -199,7 +182,8 @@ testElemNum = TestList
     , TestCase (assertEqual "" 0 (elemNum 5 [1,2,3]))
     ]
 -- ================================================
--- do Livro: 7.9
+-- do Livro: 
+--7.9
 unique :: [Integer] -> [Integer]
 unique ls = [x | x <- ls, elemNum x ls == 1]
 
@@ -212,7 +196,108 @@ unique' (x : xs)
     deleteAll :: Integer -> [Integer] -> [Integer]
     deleteAll target ls = [_x | _x <- ls, _x /= target]
 -- ================================================
+--7.12
+myMax :: [Integer] -> Integer
+myMax [] = error "Lista Vazia"
+myMax (x:xs) = go x xs
+  where
+    go m [] = m
+    go m (y:ys)
+        | m > y    = go m ys
+        |otherwise =  go y ys
 
+myMin :: [Integer] -> Integer
+myMin [] = error "Lista Vazia"
+myMin (x:xs) = go x xs
+  where
+    go m [] = m
+    go m (y:ys)
+        | m < y    = go m ys
+        |otherwise =  go y ys
+
+
+
+iSort :: [Integer] -> [Integer]
+iSort [] = []
+iSort (x:xs) = ins x (iSort xs)
+
+ins :: Integer -> [Integer] -> [Integer]
+ins x [] = [x]
+ins x (y:ys)
+   | x <= y = remove (x:(y:ys))
+   |otherwise = y : ins x ys
+
+--7.14
+isSorted :: [Integer] -> Bool
+isSorted (x:xs) = head (iSort(x:xs)) == myMin (x:xs)
+
+--7.16
+remove :: [Integer] -> [Integer]
+remove [x] = [x]
+remove [ ] = [ ]
+remove (x:xs)
+    | (elenNum x xs < 1) = x : remove xs -- Uso de elenNum. Não ter elementos repetidos
+    | otherwise  = remove (xs)
+
+--7.17
+qSort :: [Int] -> [Int]
+
+qSort [] = []
+qSort (x:xs)
+    = qSort [ y | y<-xs, y > x ] ++ [x] ++ qSort [ y | y<-xs, y < x ]
+
+--7.18
+sublist :: Eq a => [a] -> [a] -> Bool
+
+sublist [] _ = True
+sublist _ [] = False
+sublist (x:xs) (y:ys)
+    | x == y && sublist xs ys = True
+    | sublist (x:xs) ys = True
+    | otherwise = False
+
+subs :: Eq a => [a] -> [a] -> Bool
+
+subs [] _ = True
+subs _ [] = False
+subs (x:xs) (y:ys)
+    | x == y && xs == [] = True
+    | ys == [] && xs /= [] = False
+    | x == y && x1 == y1 && subs x1s y1s = True
+    | subs (x:xs) ys = True
+    | otherwise = False
+    where
+    (x1:x1s) = xs
+    (y1:y1s) = ys
+
+--7.20
+mytake :: Int -> [a] -> [a]
+mytake 0 _  = []
+mytake _ [] = []
+mytake n (a:as) = a: mytake (n-1) as
+
+mydrop :: Int -> [a] -> [a]
+mydrop _ []  = []
+mydrop n (a:as)
+    |n > 0  = mydrop (n-1) as
+    |otherwise = (a:as)
+
+mysplitAt :: Int -> [a] -> ([a],[a])
+mysplitAt _ [] = ([],[])
+mysplitAt n (a:as)
+    | n > 0 = (mytake n (a:as), mydrop n (a:as))
+    |otherwise = ([],(a:as))
+
+-- usando quickCheck
+prop_mydrop ::  Int -> [Int] -> Bool
+prop_mydrop n ls
+    |(mydrop n ls) == (drop n ls) = True
+    |otherwise = False
+
+prop_mysplitAt ::  Int -> [Int] -> Bool
+prop_mysplitAt n ls
+    |(mysplitAt n ls) == (splitAt n ls) = True
+    |otherwise = False
 
   
   
