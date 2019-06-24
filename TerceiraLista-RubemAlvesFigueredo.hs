@@ -152,9 +152,9 @@ or (x:xs) = x || or xs
 -- 10.1
 {-- Definir propriedades da função maior e testar com
 quickCheck --}
-maior :: [Int] -> Bool
-maior [] = False
-maior (x:xs)
+prop_maior :: [Int] -> Bool
+prop_maior [] = False
+prop_maior (x:xs)
   | max x (maior xs) == maximum (x:xs) = True
   | otherwise = False
 -- ================================================
