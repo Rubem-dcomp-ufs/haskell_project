@@ -173,6 +173,30 @@ prop_menor [] = False
 prop_menor (x:xs) 
   | min x (menor xs) == minimum (x:xs) = True
   | otherwise = False
+-- =================================================
+-- 10.4
+{--
+Definir a funcao:
+filtraPosicoesPares :: [Int] -> [Int]
+que retorna todos os elementos da lista de entrada que
+estao em posicoes impares
+--}
+eliminarPosicoesPares :: [t] -> [t]
+eliminarPosicoesPares [] = []
+eliminarPosicoesPares [x] = []
+eliminarPosicoesPares (x1:x2:xs) = x2:eliminarPosicoesPares(xs) 
+-- =================================================
+-- 10.5
+{-- 
+Definir a funcao:
+filtraPosicoesImpares :: [Int] -> [Int]
+que retorna todos os elementos da lista de entrada que
+estao em posicoes pares
+--}
+eliminarPosicoesImpares :: [t] -> [t]
+eliminarPosicoesImpares [] = []
+eliminarPosicoesImpares [x] = [x]
+eliminarPosicoesImpares (x1:x2:xs) = x1:eliminarPosicoesImpares(xs)
 
 -- **************Do Livro*****************
 --7.8
