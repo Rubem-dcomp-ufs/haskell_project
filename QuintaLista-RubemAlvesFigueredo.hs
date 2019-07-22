@@ -35,7 +35,7 @@ length' xs = sum (map f xs)
 --       retornada acima, acrescida novamente de uma unidade.
 --       conclui-se então que, pode-se usar o resultado de uma 
 --       função como argumento de outra, in line.
-
+--       Semelhante a função twice aplicando addOne sobre a lista ns.
 -- Defina funções que tomem uma lista, ns, e: 
 {-
  .retorne a lista consistindo dos quadrados dos inteiros em
@@ -177,5 +177,100 @@ filterLast :: (a -> Bool) -> [a] -> [a]
 filterLast p xs = takeWhile p xs
              where
                  p x = True
+
+{-
+Defina a função switchMap que aplica de forma alternada duas
+funções aos elementos de uma lista. Por exemplo
+switchMap addOne addTen [1,2,3,4] ↝ [2,12,4,14]
+-}
+switchMap :: (Int -> Int) -> (Int -> Int) -> [Int] -> [Int]
+switchMap f g xs = merge (map f (filter odd xs)) (map g (filter even xs))
+
+{-
+Defina funções
+split :: [a] -> ([a], [a])
+merge :: ([a], [a]) -> [a]
+tal que split divide em duas listas, pegando alternadamente,
+enquanto merge intercala as duas listas. Por exemplo
+split [1,2,3,4,5] ↝ ([1,3,5], [2,4])
+merge ([1,3,5], [2,4]) ↝ [1,2,3,4,5]
+-}   
+merge :: ([Int],[Int]) ->[Int]
+merge ([],[]) = []
+merge (xs,[]) = xs
+merge ([],ys) = ys
+merge ((x:xs),(y:ys)) = x:y:(merge (xs,ys))   
+
+
+split :: [Int] -> ([Int],[Int]) 
+split [] = ([],[])
+split xs = ((map (\x->x) (filter odd xs)), (map (\x->x) (filter even xs)))
+
+{-
+Defina as funções takeWhile e dropWhile
+Quais são seus tipos mais gerais?
+-}
+takeWhile' :: (a->Bool) -> [a] -> [a]
+takeWhile' f [] = []
+takeWhile' f(x:xs)= if f x = True then x:(takeWhile' p xs ) else []
+
+dropWhile' :: (a->Bool) -> [a] -> [a]
+dropWhile' f [] = []
+dropWhile' f (x:xs) = if f x = True then dropWhile' f xs else (x:xs)
+
+-- Qual é o tipo mais geral de twice ?
+-- twice :: (Int -> Int) -> (Int -> Int)
+
+-- 11.3 do livro Haskell: the craft
+composeList ::[(a->a)]->(a->a)
+composeList [f,g] = foldr (.) id [f,g]
+-- O tipo acima é genérico,mas de tipo homogêneo, visto que, composeList 
+-- recebe uma lista de funções e uma lista é composta de elementos de mesmo tipo
+-- id é o caso base e corresponde a função identidade.
+
+-- Qual é o tipo do operador de aplicação $?
+--     ($) :: (a->b)->a->b
+
+-- Considerando que id é afunção identidade, explique qual é o
+-- comportamento de cada expressão:
+--   + id $ f -> f é uma função se comportando como argumento de id -> id(f)
+--   + f $ id -> id é uma função se comportando como argumento f -> f(id) 
+--   + id ($) -> id e a composição "$" -> id (...)
+
+-- Defina a generalização de twice
+-- iter :: Int -> (a -> a) -> (a -> a)
+-- tal que
+-- iter n f
+-- é a composição de f com f, n vezes.
+-- + Usando iter, defina a função
+-- pot2 :: Int -> Int
+-- tal que pot2 n = 2^n
+iter1 :: Int -> (a -> a) -> (a -> a)
+iter1 n f = foldr (.) id fs
+    where
+    	fs = map g [1..n]
+    	g _ = f
+
+pot2 :: Int -> Int
+pot2 n = (iter1 n dobro) 1
+    where
+    	dobro x = 2 * x
+
+-- 11.7, 11.8, 11.9 e 11.10 do livro Haskell: the craft 2ed
+
+{- Usando ranges, map e expressões lambda, defina replicate:
+
+  replicate :: int -> a -> [a]
+
+  tal que:
+  replicate n x devolva uma lista formada por n x's.
+-}
+replicate :: int -> a -> [a]
+replicate n x = map (\x -> x) $ [1..n]
+
+-- Usando replicate e foldr, defina iter:              
+iter' :: Int -> (a -> a) -> (a -> a)
+iter' n f = foldr (.) id $ map (\_-> f) $ [1..n]
+
 
 
