@@ -136,15 +136,21 @@ unzip'  = foldr f ([],[])
       where
           f (x,y)(xs,ys) = (x:xs, y:ys)
 
+
 last' :: [a] -> a
-last' [] = error "lista vazia"
-last' [x] = x
-last' (_:xs) = last' xs
+last' xs = f $ map (\x->x) xs
+    where
+       f [] = error "lista vazia"
+       f [y] = y
+       f (y:ys) = f ys 
 
 init' :: [a] -> [a]
-init' [] = error "lista vazia"
-init' [x] = []
-init' (x:xs) = x:init' xs
+init' xs = fi $ map (\x->x) xs
+    where 
+        fi [] = error "lista vazia"
+        fi [x] = []
+        fi (x:xs) = x:(fi xs)
+
 {-
 O que calcula a seguinte função?:
   misterio xs = foldr (++) [] (map sing xs)
