@@ -138,11 +138,8 @@ unzip'  = foldr f ([],[])
 
 
 last' :: [a] -> a
-last' xs = f $ map (\x->x) xs
-    where
-       f [] = error "lista vazia"
-       f [y] = y
-       f (y:ys) = f ys 
+last' = foldr1 (\_ n -> n) 
+    
 
 init' :: [a] -> [a]
 init' xs = fi $ map (\x->x) xs
