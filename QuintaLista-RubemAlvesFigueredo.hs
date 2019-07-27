@@ -23,10 +23,8 @@ notDigit c = not (isDigit c)
 -- Defina length usando map e sum
 length' :: Num a => [a] -> Int
 length' [] = 0
-length' xs = sum (map f xs)
-        where
-            f x = 1 
-
+length' xs = sum (map (\x->1) xs)
+        
 -- Qual é o efeito de: 
 -- map addOne (map addOne ns) ?
 --   |                |-> retorna uma lista com cada
@@ -43,10 +41,8 @@ length' xs = sum (map f xs)
 -}
 quadInt :: Integral a => [a] -> [a]
 quadInt [] = []
-quadInt ns = map f ns
-       where
-           f x = x^2
-
+quadInt ns = map (\x->x*x) ns
+      
 -- .retorne a soma dos quadrados dos itens em ns:
 somaQuad :: Integral a => [a] -> a
 somaQuad ns = foldr (+) 0 (map (\x -> x^2) ns)
@@ -61,9 +57,8 @@ maiorQZero ns = and( map g ns )
 -- 1. calcular o menor valor de uma função f aplicada de 0 até n
 menorDe :: Int -> Int
 menorDe 0 = 0
-menorDe n = minimum  $ map m [1..n]
-       where
-         m x = x  
+menorDe n = minimum  $ map (\x->x) [1..n]
+       
 -- 2. verificar se os valores de f aplicados de 0 até n são todos
 --    iguais:
 -- Com recursão: 
@@ -117,8 +112,7 @@ entrada n retorna 2^n
 iter :: Int -> (a -> a) -> (a -> a)
 iter n f = foldr (.) id fs
     where
-    	fs = map g [1..n]
-    	g _ = f
+    	fs = map (\_->f) [1..n]    
 
 twice :: (Int -> Int) -> (Int -> Int)
 twice f = iter1 2 f
@@ -169,21 +163,15 @@ tal que filterFirst p xs remova o primeiro elemento de xs que não
 satisfaz a propriedade p.
 -}
 filterFirst :: (a -> Bool) -> [a] -> [a]
-filterFirst p xs = dropWhile p xs
-             where
-                 p x = False
-
-{-
+filterFirst p xs = dropWhile (\x->False) xs
+             {-
 Defina:
 filterLast :: (a -> Bool) -> [a] -> [a]
 que remove a última ocorrência de um elemento de uma lista que não
 satisfaz a propriedade.
 -}
 filterLast :: (a -> Bool) -> [a] -> [a]
-filterLast p xs = takeWhile p xs
-             where
-                 p x = True
-
+filterLast p xs = takeWhile (\x->True) xs
 {-
 Defina a função switchMap que aplica de forma alternada duas
 funções aos elementos de uma lista. Por exemplo
@@ -255,8 +243,8 @@ composeList [f,g] = foldr (.) id [f,g]
 iter1 :: Int -> (a -> a) -> (a -> a)
 iter1 n f = foldr (.) id fs
     where
-    	fs = map g [1..n]
-    	g _ = f
+    	fs = map (\_-> f) [1..n]
+    	
 
 pot2 :: Int -> Int
 pot2 n = (iter1 n dobro) 1
