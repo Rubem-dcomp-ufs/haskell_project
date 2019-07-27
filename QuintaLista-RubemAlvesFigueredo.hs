@@ -12,7 +12,13 @@ import Data.List
 primeira prova sem usar nem
 compreensões e nem recursão
 -}
-
+-- Q1:
+senAprox :: Int -> Float -> Float
+senAprox n x = sum (map f [0..n])
+    where 
+        f i = (((-1)^i)*(x^((2*i)+1)))/fromIntegral(fat((2*i)+1))
+        fat n = product[1..n]
+-- 4)        
 separaDigitos :: String -> (String, String)
 separaDigitos [] = ([],[])
 separaDigitos xs = (filter isDigit xs, filter notDigit xs)
