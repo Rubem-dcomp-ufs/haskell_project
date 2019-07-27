@@ -141,12 +141,10 @@ last' :: [a] -> a
 last' = foldr1 (\_ n -> n) 
     
 
-init' :: [a] -> [a]
-init' xs = fi $ map (\x->x) xs
-    where 
-        fi [] = error "lista vazia"
-        fi [x] = []
-        fi (x:xs) = x:(fi xs)
+init' :: [a]->[a]
+init' xs = foldr1 (++) ns
+    where
+      ns = reverse (drop 1 (reverse (map (\x->[x]) xs)))
 
 {-
 O que calcula a seguinte função?:
