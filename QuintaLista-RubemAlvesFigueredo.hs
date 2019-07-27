@@ -205,8 +205,9 @@ merge :: ([Int],[Int]) ->[Int]
 merge ([],[]) = []
 merge (xs,[]) = xs
 merge ([],ys) = ys
-merge ((x:xs),(y:ys)) = x:y:(merge (xs,ys))   
-
+merge xs ys = f ((map (\x->x) xs) (map (\y->y) ys))
+        where
+            f (x:xs)(y:ys) = x:y:(f xs ys) 
 
 split :: [Int] -> ([Int],[Int]) 
 split [] = ([],[])
