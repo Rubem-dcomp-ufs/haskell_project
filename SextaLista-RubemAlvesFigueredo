@@ -1,0 +1,39 @@
+PROVA POR INDUÇÃO DE sumPot2 n = 2^(n+1)-1.
+FALTA DENOMINAR, A HIPÓTESE INDUTIVA, INDUÇÃO, ...
+sumPot2 0 = 1
+sumPot2 n = 2^n + sumPot2 (n-1)
+
+provar que:
+sumPot2 n = 2^(n+1)-1
+
+caso base:
+sumPot2 0 = 2^(0+1)-1 = 2^(1)-1=2-1=1 => sumPot2 0 = 1
+
+para (n-1):
+sumPot2 (n-1) = 2^(n-1+1)-1 = 2^n - 1
+sumPot2 (n-1) = 2^n - 1
+
+Prova:
+sumPot2 n = 2^n + sumPot2 (n-1) = 2^n + 2^n - 1 = 2*2^n - 1 = 2^(n+1) - 1
+sumPot2 n = 2^(n+1) - 1
+======================================
+PROVA POR INDUÇÃO DE map (f.g) xs.
+FALTA DENOMINAR, A HIPÓTESE INDUTIVA, INDUÇÃO, ...
+map f [] = []
+map f (x:xs) = f x:map f xs
+
+Provar que:
+map f (map g xs) = map (f.g) xs
+
+caso base:
+- map f (map g []) = map f [] = []
+   = map (f.g) [] = map h [] = []
+               Onde f.g = h
+
+Hipótese por indução:
+ map f (map g (x:xs)) = map (f.g) (x:xs)
+ map f (g x:map g xs) = f.g x:map (f.g) xs =>
+ map f (map g (x:xs)) = f.g x: map (f.g) xs = map f.g (x:xs)
+ => map f (map g (x:xs)) = map f.g (x:xs)
+
+ Se: (x:xs) = ys => map f (map g ys) = map f.g ys
