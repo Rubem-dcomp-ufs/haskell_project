@@ -1,3 +1,8 @@
+Do livro Haskell: The craft of functional programming, 3d ed, os exercícios
+9.5, 9.6, 9.7, 9.9, 9.11,
+11.25, 11.26, 11.29, 11.32 e 11.33
+=============================================================================
+
 PROVA POR INDUÇÃO DE sumPot2 n = 2^(n+1)-1.
 FALTA DENOMINAR, A HIPÓTESE INDUTIVA, INDUÇÃO, ...
 sumPot2 0 = 1
@@ -9,7 +14,7 @@ sumPot2 n = 2^(n+1)-1
 caso base:
 sumPot2 0 = 2^(0+1)-1 = 2^(1)-1=2-1=1 => sumPot2 0 = 1
 
-para (n-1):
+Hipótese Indutiva, para (n-1):
 sumPot2 (n-1) = 2^(n-1+1)-1 = 2^n - 1
 sumPot2 (n-1) = 2^n - 1
 
@@ -30,7 +35,7 @@ caso base:
    = map (f.g) [] = map h [] = []
                Onde f.g = h
 
-Hipótese por indução:
+Hipótese indutiva:
  map f (map g (x:xs)) = map (f.g) (x:xs)
  map f (g x:map g xs) = f.g x:map (f.g) xs =>
  map f (map g (x:xs)) = f.g x: map (f.g) xs = map f.g (x:xs)
