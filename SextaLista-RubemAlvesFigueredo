@@ -21,7 +21,7 @@ sumPot2 (n-1) = 2^n - 1
 Prova:
 sumPot2 n = 2^n + sumPot2 (n-1) = 2^n + 2^n - 1 = 2*2^n - 1 = 2^(n+1) - 1
 sumPot2 n = 2^(n+1) - 1
-======================================
+===========================================================================
 PROVA POR INDUÇÃO DE map (f.g) xs.
 FALTA DENOMINAR, A HIPÓTESE INDUTIVA, INDUÇÃO, ...
 map f [] = []
@@ -42,3 +42,80 @@ Hipótese indutiva:
  => map f (map g (x:xs)) = map f.g (x:xs)
 
  Se: (x:xs) = ys => map f (map g ys) = map f.g ys
+ =========================================================================
+           ====================== CAP 9 =========================
+ 9.5
+Base:
+    LHS:
+        sum ([] ++ ys) == sum ys
+    RHS:
+        sum [] + sum ys == 0 + sum ys == sum ys
+    LHS == RHS
+
+Ind:
+    LHS:
+        sum ((x : xs) ++ ys) == sum ([x] ++ xs ++ ys) == x + sum (xs ++ ys)
+        == x + sum xs + sum ys
+    RHS:
+        sum (x : xs) + sum ys == x + sum xs + sum ys == x + sum (xs ++ ys)
+    LHS == RHS
+-}
+
+{-
+9.6
+xs ++ [] == xs
+Base:
+    [] ++ [] == LHS
+    [] == RHS
+    [] == [] ++ []
+    LHS == RHS
+Ind:
+    (x : xs) ++ [] == LHS
+    == (x : (xs ++ []))
+    hypothsis: \forall xs ++ [] == xs
+    hypothsis apply
+    == (x : xs) == RHS
+
+xs ++ (ys ++ zs) == (xs ++ ys) ++ zs
+
+Base:
+    [] ++ (ys ++ zs) == (ys ++ zs) == ([] ++ ys) ++ zs
+Ind:
+    theorem here: (x : xs) ++ ps == x : (xs ++ ps)
+    (x : xs) ++ (ys ++ zs) == x : (xs ++ (ys ++ zs)) == x : ((xs ++ ys) ++ zs)
+    == (x : (xs ++ ys) ++ zs) == (((x : xs) ++ ys) ++ zs)
+-}
+
+{-
+9.7
+sum (reverse xs) == sum xs
+
+Base:
+    sum (reverse []) == 0 == sum []
+Ind:
+    sum (reverse (x : xs)) == sum (xs ++ [x]) == x + sum xs
+    sum (x : xs) == x + sum xs
+    LHS == RHS
+
+length (reverse xs) == length xs
+
+Base:
+    length (reverse []) == length [] == 0
+Ind:
+    length (reverse (x : xs)) == length (xs ++ [x]) == 1 + length xs
+    length (x : xs) == 1 + length xs
+    LHS == RHS
+-}
+
+{-
+9.9
+zip (fst (unzip ps)) (snd (unzip ps)) == ps
+
+Base:
+    zip (fst (unzip ([], []))) (snd (unzip ([], []))) == zip [] [] == ([], [])
+
+Ind:
+    zip (fst (unzip (x : xs, y : ys))) (snd (unzip (x : xs, y : ys)))
+    == zip (x : xs) (y : ys) == (x : xs, y : ys)
+-}
+ 
