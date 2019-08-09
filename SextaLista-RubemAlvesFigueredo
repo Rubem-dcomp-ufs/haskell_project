@@ -45,7 +45,7 @@ Hipótese indutiva:
  =========================================================================
            ====================== CAP 9 =========================
  9.5
-Base:
+Caso Base:
     LHS:
         sum ([] ++ ys) == sum ys
     RHS:
@@ -64,7 +64,7 @@ Ind:
 {-
 9.6
 xs ++ [] == xs
-Base:
+Caso Base:
     [] ++ [] == LHS
     [] == RHS
     [] == [] ++ []
@@ -90,7 +90,7 @@ Ind:
 9.7
 sum (reverse xs) == sum xs
 
-Base:
+Caso Base:
     sum (reverse []) == 0 == sum []
 Ind:
     sum (reverse (x : xs)) == sum (xs ++ [x]) == x + sum xs
@@ -99,7 +99,7 @@ Ind:
 
 length (reverse xs) == length xs
 
-Base:
+Caso Base:
     length (reverse []) == length [] == 0
 Ind:
     length (reverse (x : xs)) == length (xs ++ [x]) == 1 + length xs
@@ -111,7 +111,7 @@ Ind:
 9.9
 zip (fst (unzip ps)) (snd (unzip ps)) == ps
 
-Base:
+Caso Base:
     zip (fst (unzip ([], []))) (snd (unzip ([], []))) == zip [] [] == ([], [])
 
 Ind:
