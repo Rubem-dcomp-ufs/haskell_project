@@ -46,22 +46,21 @@ Hipótese indutiva:
            ====================== CAP 9 =========================
  9.5
 Caso Base:
-    LHS:
-        sum ([] ++ ys) == sum ys
-    RHS:
-        sum [] + sum ys == 0 + sum ys == sum ys
-    LHS == RHS
+(I)        sum ([] ++ ys) == sum ys
 
-Ind:
-    LHS:
+(II)       sum [] + sum ys == 0 + sum ys == sum ys
+    (I) == (II)
+
+Indução
+    (III):
         sum ((x : xs) ++ ys) == sum ([x] ++ xs ++ ys) == x + sum (xs ++ ys)
         == x + sum xs + sum ys
-    RHS:
+    (IV):
         sum (x : xs) + sum ys == x + sum xs + sum ys == x + sum (xs ++ ys)
-    LHS == RHS
--}
+    (III) == (IV)
 
-{-
+--========================================================================
+
 9.6
 xs ++ [] == xs
 Caso Base:
@@ -69,53 +68,53 @@ Caso Base:
     [] == RHS
     [] == [] ++ []
     LHS == RHS
-Ind:
-    (x : xs) ++ [] == LHS
-    == (x : (xs ++ []))
-    hypothsis: \forall xs ++ [] == xs
-    hypothsis apply
-    == (x : xs) == RHS
+Indução:
+    (x : xs) ++ [] == (x : (xs ++ []))   (I)
+    hipótese: \-/x  xs ++ [] == xs
+    Aplicação da hipótese:
+     == (x : xs)                         (II)
 
 xs ++ (ys ++ zs) == (xs ++ ys) ++ zs
 
-Base:
+Caso Base:
     [] ++ (ys ++ zs) == (ys ++ zs) == ([] ++ ys) ++ zs
-Ind:
-    theorem here: (x : xs) ++ ps == x : (xs ++ ps)
+Indução:
+    Teorema: (x : xs) ++ ps == x : (xs ++ ps)
     (x : xs) ++ (ys ++ zs) == x : (xs ++ (ys ++ zs)) == x : ((xs ++ ys) ++ zs)
     == (x : (xs ++ ys) ++ zs) == (((x : xs) ++ ys) ++ zs)
--}
+--========================================================================
 
-{-
 9.7
 sum (reverse xs) == sum xs
 
 Caso Base:
     sum (reverse []) == 0 == sum []
-Ind:
-    sum (reverse (x : xs)) == sum (xs ++ [x]) == x + sum xs
-    sum (x : xs) == x + sum xs
-    LHS == RHS
+Indução:
+    sum (reverse (x : xs)) == sum (xs ++ [x]) == x + sum xs    (I)
+    sum (x : xs) == x + sum xs                                 (II)
+    (I) == (II)
 
 length (reverse xs) == length xs
 
 Caso Base:
     length (reverse []) == length [] == 0
-Ind:
-    length (reverse (x : xs)) == length (xs ++ [x]) == 1 + length xs
-    length (x : xs) == 1 + length xs
-    LHS == RHS
--}
+Indução:
+    length (reverse (x : xs)) == length (xs ++ [x]) == 1 + length xs   (I)
+    length (x : xs) == 1 + length xs                                   (II)
+    (I) == (II)
 
-{-
+--=========================================================================
+
 9.9
 zip (fst (unzip ps)) (snd (unzip ps)) == ps
 
 Caso Base:
     zip (fst (unzip ([], []))) (snd (unzip ([], []))) == zip [] [] == ([], [])
 
-Ind:
+Indução:
     zip (fst (unzip (x : xs, y : ys))) (snd (unzip (x : xs, y : ys)))
     == zip (x : xs) (y : ys) == (x : xs, y : ys)
--}
- 
+
+--=========================================================================
+
+9.11
