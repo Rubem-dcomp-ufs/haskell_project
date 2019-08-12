@@ -76,5 +76,28 @@ Indução:
     == zip (x : xs) (y : ys) == (x : xs, y : ys)
 
 --=========================================================================
-
 9.11
+
+   9.5:
+     propSumPlusPlus :: [Int]->[Int] -> Bool
+     propSumPlusPlus xs ys = sum (xs ++ ys) == sum xs + sum ys
+
+   9.6:
+     propPlusPlus :: [Int]->[Int] -> Bool
+     propPlusPlus xs ys = xs ++ ( ys ++ zs ) == ( xs ++ ys ) ++ zs
+
+   9.7:
+     propSumRev :: [Int] -> Bool
+     propSumrev xs = sum ( reverse xs ) == sum xs
+
+     propLengthRev :: [Int] -> Bool
+     propLengthRev xs = length ( reverse xs ) == length xs
+
+   9.9:
+     propZip :: [Int]->[Int] -> Bool
+     propZip xs ys = zip ( fst xs ys ) (snd xs ys ) == (xs,ys)
+
+--=========================================================================
+           ====================== CAP 11 =========================
+ 
+ 
