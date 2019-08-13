@@ -136,6 +136,24 @@ Solução:
  iter é definido como sendo:
 iter :: Integer -> (a -> a) -> (a -> a)
 iter n f
-   | n > 0  = f . iter (n-1) f
-   | otherwise = id
-continuarei .... ( são 02:37 da manhã, depois continuo ;)  )
+   | n > 0  = f . iter (n-1) f   ( I )
+   | otherwise = id              ( II )
+   
+caso base:
+ iter 0 id = id
+ De fato, pela definição dada acima, 0 (zero) não é maior que
+ 0 (zero), logo, por  ( II ), é igual a "id".
+
+hipótese indutiva:
+ iter x id = id
+
+indução:
+ iter (n+1) id = id . iter ((n+1)-1) id      ( I )
+ = id . iter n id                            ( hipótese indutiva )
+ = id . id = id
+Logo, 
+ iter n id = id
+ iter (n+1) id = id
+ Ou seja, válido para qualquer "n" natural
+--==========================================================================
+
