@@ -127,3 +127,15 @@ Solução:
    id . f = f => id ( f ) = f => id ( f x ) = f x 
    Logo, id ( f ) = id . f = f
 --=========================================================================
+11.29
+Usando indução, prove que para todo número natural n,
+
+iter n id = id
+
+Solução:
+ iter é definido como sendo:
+iter :: Integer -> (a -> a) -> (a -> a)
+iter n f
+   | n > 0  = f . iter (n-1) f
+   | otherwise = id
+continuarei .... ( são 02:37 da manhã, depois continuo ;)  )
