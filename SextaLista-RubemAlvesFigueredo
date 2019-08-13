@@ -204,6 +204,17 @@ Hipótese indutiva:
 	              (lado esquerdo) = (lado direito)	
 
 --==========================================================================
-11.33
-
+11.33 - Argumente que o resultado:  concat (xs ++ ys)  =  concat xs ++ concat ys
+        é um caso especial de ( foldr.3 - acima em 11.32), usando,
+	concat = foldr (++) []          
+	  
+	  foldr f st (xs ++ ys)  =  f (foldr f st xs) (foldr f st ys)
+	                                                                                       f = (++)
+	  foldr (++) st (xs ++ ys)  =  (++) (foldr (++) st xs) (foldr (++) st ys)  
+	                                                                                       st = []
+	  foldr (++) [] (xy ++ ys)  =  (++) (foldr (++) [] xs) (foldr (++) [] ys)
+	                                                                                       concat = foldr (++) []
+	  concat (xs ++ ys)  =  (++) (concat xs) (concat ys)
+	                                                                                       (++)
+	  concat (xs ++ ys)  =  concat xs ++ concat ys
 --==========================================================================
