@@ -100,4 +100,21 @@ Indução:
 --=========================================================================
            ====================== CAP 11 =========================
  
- 
+ 1.25
+Usando o princípio da extensionalidade, mostre que a composição de funções 
+é associativa: para todo f, g e h, conforme abaixo.
+
+f . ( g . h ) = ( f . g ) . h
+
+f . ( g . h )   primeiro membro (I)
+( f . g ) . h   segundo membro (II)
+
+(I): 
+ f . ( g . h ) = f . g ( h ) = f ( g ( h )) = f ( g ( h x ))
+
+(II):
+ ( f . g ) . h = ( f ( g ) ) . h = ( f ( g ( h ))) = f ( g ( h )) 
+ = f ( g ( h x ))
+
+ ( I ) == ( II )
+-- ============================================================================
