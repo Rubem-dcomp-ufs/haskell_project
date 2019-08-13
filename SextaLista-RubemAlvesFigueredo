@@ -157,6 +157,51 @@ Logo,
  Ou seja, válido para qualquer "n" natural
 --==========================================================================
 11.32
+Se f é associativa e st é uma identidade para f - a noção que foi definida na página 255 -
+então prove que a equação:
+foldr f st (xs ++ ys)  =  f (foldr f st xs) (foldr f st ys)
+é válida para as listas finitas xs e ys.
+
+OBS: será usado a definição de "++" e "foldr".	
+
+	 (I) assumindo que:   "f" é associativa
+	
+	 (II) assumindo que:   "st" é uma identidade para "f"
+	
+	
+	 Prova da Indução:
+
+	Indução:
+
+	 (Caso base):  xs = []
+	
+	       =>  (lado esquerdo) = foldr f st (xs ++ ys)
+(Caso base)                 = foldr f st ([] ++ ys)
+(++)                        = foldr f st ys
+(lado direito) = f (foldr f st xs) (foldr f st ys)
+	(Caso base)                = f (foldr f st []) (foldr f st ys)    (I) e foldr
+	                           = f st (foldr f st ys)                 (II) e st
+	                           = foldr f st ys	
+	
+	                           (lado esquerdo) = (lado direito)	       	
+	
+Hipótese indutiva:
+	Supondo que vale: foldr f st (xs ++ ys)  =  f (foldr f st xs) (foldr f st ys)		
+
+	 1. Passo indutivo:
+
+(lado esquerdo) = foldr f st ( (x : xs) ++ ys )
+	(++)           = foldr f st ( x : (xs ++ ys) )                (I) e foldr
+	               = x `f` foldr f st (xs ++ ys)
+	(hipótese indutiva)  = x `f` f (foldr f st xs) (foldr f st ys)
+	                     = x `f` (foldr f st xs) `f` (foldr f st ys)
+	        	            = ( x `f` (foldr f st xs) ) `f` (foldr f st ys)                                                             
+                      = ( foldr f st (x : xs) ) `f` (foldr f st ys)
+
+(lado direito) = f ( foldr f st (x : xs) ) (foldr f st ys)
+               = ( foldr f st (x : xs) ) `f` (foldr f st ys)
+
+	              (lado esquerdo) = (lado direito)	
 
 --==========================================================================
 11.33
