@@ -79,6 +79,22 @@ regular (Triangle x y z)
 	| otherwise = False
 
 14.15
+eval :: Expr -> Integer
+eval (Lit val)      = val
+eval (Add e1 e2)    = eval e1 + eval e2
+eval (Sub e1 e2)    = eval e1 - eval e2
+eval (Prd e1 e2)    = eval e1 * eval e2
+eval (Div e1 e2)    = if eval e2 == 0
+                          then error "divide 0?"
+                          else div (eval e1) (eval e2)
+
+bEval :: BExp -> Bool
+bEval (BoolLit rubem)    = rubem
+bEval (And b1 b2)        = bEval b1 && bEval b2
+bEval (Not b1)           = (not . bEval) b1
+bEval (Equal e1 e2)      = BExp e1 == BExp e2
+bEval (Greater e1 e2)    = BExp e1 > BExp e2
+
 
 
 
