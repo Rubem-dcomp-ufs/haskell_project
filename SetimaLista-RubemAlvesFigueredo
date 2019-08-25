@@ -1,0 +1,98 @@
+Exercícios 5.6, 14.1, 14.2, 14.3, 14.4, 14.5, 14.6, 14.15, ....
+Semana que vêm a lista será completada como exercícios de I/O.
+
+5.6
+
+data ShopItem =  ShopItem String Int
+                 deriving ( Eq , Show )
+
+14.1
+data Temp = Frio | Quente
+	deriving (Show)
+data Season = Primavera | Verao | Outono | Inverno
+	deriving (Eq)
+
+weather :: Season -> Temp
+
+weather season
+	| season == Verao = Quente
+	| otherwise = Frio
+
+14.2
+data Season = Spring | Summer | Autumn | Winter
+   deriving (Eq,Show)
+
+data Month = January | February | March | April | May | June | July | August | September | October | November | December
+	deriving (Eq,Ord)
+
+season :: Month -> Season
+season month
+	| month > September = Autumn
+	| month > June = Summer
+	| month > March = Spring
+	| otherwise = Winter
+
+14.3
+data Temp = Cold | Hot
+   deriving (Show)
+data Season = Spring | Summer | Autumn | Winter
+   deriving (Eq)
+
+weather :: Season -> Temp
+weather season
+   | season == Winter = Cold
+   | otherwise = Hot
+
+14.4
+data Shape = Circle Float | Rectangle Float Float
+
+perimeter :: Shape -> Float
+
+perimeter (Circle r) = pi*2*r
+perimeter (Rectangle x y) = 2*(x+y)
+
+14.5
+data Shape = Circle Float | Rectangle Float Float | Triangle Float Float Float
+
+perimeter :: Shape -> Float
+perimeter (Triangle x y z) = x+y+z
+
+isRound :: Shape -> Bool
+isRound (Triangle _ _ _) = False
+
+area :: Shape -> Float
+area (Triangle x y z) = sqrt(s*(s-x)*(s-y)*(s-z))
+	where
+	s = perimeter (Triangle x y z) / 2
+
+14.6
+data Shape = Circle Float | Rectangle Float Float | Triangle Float Float Float
+
+regular :: Shape -> Bool
+
+regular (Circle _ ) = True
+regular (Rectangle x y) 
+	| x == y = True
+	| otherwise = False
+regular (Triangle x y z)
+	| x == y && x == z  = True
+	| otherwise = False
+
+14.15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
