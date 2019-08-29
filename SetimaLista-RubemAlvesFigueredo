@@ -93,21 +93,3 @@ bEval (And b1 b2)        = bEval b1 && bEval b2
 bEval (Not b1)           = (not . bEval) b1
 bEval (Equal e1 e2)      = BExp e1 == BExp e2
 bEval (Greater e1 e2)    = BExp e1 > BExp e2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
