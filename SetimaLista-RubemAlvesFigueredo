@@ -21,7 +21,7 @@ weather season
 data Season = Spring | Summer | Autumn | Winter
    deriving (Eq,Show)
 
-data Month = January | February | March | April | May | June | July | August | September | October | November | December
+data Month = Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec
 	deriving (Eq,Ord)
 
 season :: Month -> Season
