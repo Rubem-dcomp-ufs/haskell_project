@@ -99,3 +99,181 @@ bEval (Greater e1 e2) = (eval e1) > (eval e2) -- Recursão mútua aqui, estou ch
 
 -- Testando com os valores
 -- bEval (Equal (Op Add (Lit 2) (Lit 2)) (Op Sub (Lit 10) (Lit 6))
+------------------ Exercícios  de IO ------------------
+-- DEFINIÇÕES:
+
+toInt :: String -> Int
+
+toInt s = read s :: Int
+
+getInt :: IO Int
+
+getInt = do ln <- getLine
+            return (read ln :: Int)
+--------------------------------------------------------
+-- 1. Escreva um programa com IO que leia uma linha de entrada e
+--    verifique se a linha lida é ou não uma palavra palíndroma.
+--    O programa deve "pedir" para inserir uma linha e escrever
+--    uma mensagem apropriada para o resultado.
+
+isPalindromo :: String -> Bool
+isPalindromo ln = ln == reverse ln
+palindromIO :: IO ()
+palindromIO = do ln <- getLine
+                  if isPalindromo ln
+                  then putStrLn ("Sim")
+                  else putStrLn ("Nao")
+
+-- 2. Escreva um programa que leia um inteiro (Int) n e um Float f
+--    e imprima o valor de f elevado à n. O programa deverá
+--    pedir cada uma das entradas e escrever o resultado em uma
+--    mensagem apropriada.
+
+getReadable :: Read a => IO a
+getReadable = do 
+                lin <- getLine
+                return (read lin)
+
+elevIntFloat :: IO ()
+elevIntFloat = do
+                 putStr "Escreva um numero Int (n): "
+                 n1 <- getReadable :: IO Int
+                 putStr "Escreva um numero Float (f): "
+                 n2 <- getReadable :: IO Float
+                 putStrLn ("F elevado a n e (f^n) = " ++ show(n2^n1))
+
+-- 3. Escreva um programa que leia vários números inteiros, todos
+--    digitados numa mesma linha e separados por espaço e, imprima a soma de todos eles.
+--    Dica: use a função words para quebrar um string em "palavras".
+
+lerInteiros :: IO ()
+lerInteiros = do
+                putStr $ "Digite varios números separados por espaço: "
+                nums <- getLine
+                let soma = sum $ map (toInt) $ words nums
+                putStrLn ("Soma = " ++ show(soma))
+
+-- 4. Defina a função
+--       putNtimes :: Integer -> String -> IO ()
+--       tal que o efeito de:
+--       putNtimes n str
+--       é escrever na tela o string str, n vezes, um por linha.
+
+putNtimes :: Integer -> String -> IO ()
+putNtimes n str =
+       if n == 0
+       then return ()
+       else do putStrLn str
+               putNtimes (n-1) str
+
+-- 5. Escreva um programa que leia primeiro um número, digamos n,
+--    depois leia n números inteiros e então escreva a soma deles.
+--    O programa deverá escrever mensagens apropriadas pedindo dados
+--    e dizendo qual é o resultado. 
+
+lerNumeros_ :: Int -> String -> IO ()
+lerNumeros_ n xs = do
+                    if n <= 0
+                    then putStrLn ("Soma = " ++ show(sum $ map (toInt) $ words xs))
+                    else do
+                           putStr "Escreva um numero: "
+                           ln <- getLine
+                           lerNumeros_ (n-1)  (ln ++ " " ++ xs)
+
+lerNumeros :: IO ()
+lerNumeros = do
+               putStr "Escreva a quantidade de numeros: "
+               num <- getInt
+               lerNumeros_ num []
+-- outra definicao
+
+lerNumeros_2 :: Int -> Int -> IO ()
+lerNumeros_2 n x = do
+                    if n <= 0
+                    then putStrLn ("Soma = " ++ show x)
+                    else do
+                           putStr "Escreva um numero: "
+                           ln <- getInt
+                           lerNumeros_2 (n-1)  (x + ln)
+
+lerNumeros2 :: IO ()
+lerNumeros2 = do
+               putStr "Escreva a quantidade de numeros: "
+               num <- getInt
+               lerNumeros_2 num 0
+
+-- 6. Escreva um programa que leia uma sequencia de numeros inteiros
+--    finalizada por 0 e escreva a soma de todos eles. O programa
+--    devera escrever mensagens apropriada pedindo dados e dizendo qual
+--    e o resultado
+
+sequenciaNumeros_ :: [Int] -> IO ()
+sequenciaNumeros_ xs = do 
+                         putStr "Escreva um numero (0 -> termina): "
+                         line <- getInt
+                         if line == 0
+                         then  putStrLn $ ("Soma: " ++ show (sum xs))
+                         else do
+                                sequenciaNumeros_ (line : xs) 
+
+sequenciaNumeros :: IO ()
+sequenciaNumeros = sequenciaNumeros_ []
+
+-- 7. Escreva uma função wc que lê linhas até que uma linha vazia é
+--    digitada. O programa deverá escrever o número de linhas, número
+--    de palavras e número de caracteres que foram lidos.
+
+contarPalavras :: String -> Int
+contarPalavras s = length $ words s
+
+contarCaracteres :: String -> Int
+contarCaracteres s = length s
+
+wc_ :: Int -> Int -> Int -> IO ()
+wc_ l p c = do
+            putStr "Escreva algo: "
+            line <- getLine
+            if line == ""
+            then  putStrLn $ "Linhas: " ++ show l ++ " - Palavras: " ++ show p ++ " - Caracteres: " ++ show c
+            else do
+                  wc_ (l + 1) (p + contarPalavras line) (c + contarCaracteres line)              
+
+wc :: IO ()
+wc = wc_ 0 0 0 
+
+-- 8. Escreva um programa que le numeros inteiros ate ser digitado 0.
+--    O programa deve escrever a sequencia de numeros lidos, porem
+--    em ordem crescente.
+
+insere :: Int -> [Int] -> [Int]
+insere n [] = [n]
+insere n (x:xs) 
+   | n <= x = (n:x:xs)
+   | otherwise = x : insere n xs
+   
+sequenciaNumerosCrescente_ :: [Int] -> IO ()
+sequenciaNumerosCrescente_ xs = do 
+                                 putStr "Escreva um numero (0 -> termina): "
+                                 n <- getInt
+                                 if n == 0
+                                 then putStrLn $ ("Sequencia Crescente: " ++ show xs)
+                                 else sequenciaNumerosCrescente_ (insere n xs) 
+
+sequenciaNumerosCrescente :: IO ()
+sequenciaNumerosCrescente = sequenciaNumerosCrescente_ []
+
+-- 8.15. Define an interactive palindrome checker. You should neglect capitalization, white space and punctuation, 
+--       so that "Madam I'm Adam", is recognized as a palindrome.
+-- Traduzindo: Defina um verificador interativo palíndromo. Não considere letras maiúsculas, espaços em branco e 
+--             pontuação, como por exemplo, "Madame eu sou Adam", é considerado um palíndromo.
+-- OBS.: A função funciona, porém sem o apóstrofo do "I'm".
+
+palindromo_ :: String -> IO ()
+palindromo_ str = do
+                   if foldr1 (++) . map (\x->x) (words str) == foldr1 (++) . reverse . map (reverse) (words str) 
+                   then putStrLn $ "É palindromo!" 
+                   else putStrLn $ "Não é palindromo!"
+                   
+propPalindromo :: String -> Bool
+propPalindromo str = palindromo_ str == foldr1 (++) . map (\x->x) (words str)
+
