@@ -103,11 +103,9 @@ bEval (Greater e1 e2) = (eval e1) > (eval e2) -- Recursão mútua aqui, estou ch
 -- DEFINIÇÕES:
 
 toInt :: String -> Int
-
 toInt s = read s :: Int
 
 getInt :: IO Int
-
 getInt = do ln <- getLine
             return (read ln :: Int)
 --------------------------------------------------------
@@ -150,8 +148,8 @@ lerInteiros :: IO ()
 lerInteiros = do
                 putStr $ "Digite varios números separados por espaço: "
                 nums <- getLine
-                let soma = sum $ map (toInt) $ words nums
-                putStrLn ("Soma = " ++ show(soma))
+                let soma = sum . map (toInt) $ words nums
+                putStrLn $ "Soma = " ++ show(soma)
 
 -- 4. Defina a função
 --       putNtimes :: Integer -> String -> IO ()
@@ -174,7 +172,7 @@ putNtimes n str =
 lerNumeros_ :: Int -> String -> IO ()
 lerNumeros_ n xs = do
                     if n <= 0
-                    then putStrLn ("Soma = " ++ show(sum $ map (toInt) $ words xs))
+                    then putStrLn ("Soma = " ++ show . sum . map (toInt) $ words xs)
                     else do
                            putStr "Escreva um numero: "
                            ln <- getLine
@@ -207,24 +205,23 @@ lerNumeros2 = do
 --    devera escrever mensagens apropriada pedindo dados e dizendo qual
 --    e o resultado
 
-sequenciaNumeros_ :: [Int] -> IO ()
-sequenciaNumeros_ xs = do 
-                         putStr "Escreva um numero (0 -> termina): "
-                         line <- getInt
-                         if line == 0
-                         then  putStrLn $ ("Soma: " ++ show (sum xs))
-                         else do
-                                sequenciaNumeros_ (line : xs) 
-
-sequenciaNumeros :: IO ()
-sequenciaNumeros = sequenciaNumeros_ []
+sequenciaNumeros' :: Int -> IO ()
+sequenciaNumeros' x = do                     
+                      putStr "Escreva um numero (0 -> termina): "
+                      line <- getInt                         
+                      if line == 0
+                      then  putStrLn ("Soma: " ++ show (x))
+                      else do
+                            sequenciaNumeros' (line + x) 
+sequenciaNumeros :: IO()
+sequenciaNumeros = sequenciaNumeros' 0
 
 -- 7. Escreva uma função wc que lê linhas até que uma linha vazia é
 --    digitada. O programa deverá escrever o número de linhas, número
 --    de palavras e número de caracteres que foram lidos.
 
 contarPalavras :: String -> Int
-contarPalavras s = length $ words s
+contarPalavras s = length . words s
 
 contarCaracteres :: String -> Int
 contarCaracteres s = length s
